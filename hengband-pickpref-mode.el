@@ -121,10 +121,22 @@
    (cons "#\\(.*\\)$" (list 1 hengband-pickpref:inscription-face)))
   "Highlighting expressions for Hengband PickPref mode")
 
+;; fill-paragraph
+(defun hengband-pickpref:fill-paragraph (&optional justify)
+  "Like \\[fill-paragraph] but handle Hengband pickpref comments."
+  (interactive "P")
+  ;; fill-comment-paragraph does nothing and returns nil when we are
+  ;; not in a comment. That's perfectly fine, as we can never fill
+  ;; non-comments. Always return t to indicate a success.
+  (fill-comment-paragraph justify)
+  t)
+
 ;;;###autoload
 (define-derived-mode hengband-pickpref-mode prog-mode "Hengband PickPref"
   "Major mode for editing Hengband pickpref files."
-  (set (make-local-variable 'font-lock-defaults) '(hengband-pickpref:font-lock-keywords))
-  (set (make-local-variable 'font-lock-keywords-only) t))
+  (setq-local font-lock-defaults '(hengband-pickpref:font-lock-keywords))
+  (setq-local font-lock-keywords-only t)
+  (setq-local comment-start "#")
+  (setq-local fill-paragraph-function 'hengband-pickpref:fill-paragraph))
 
 (provide 'hengband-pickpref-mode)
