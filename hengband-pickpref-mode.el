@@ -115,6 +115,7 @@
 
    ;; Patterns
    (cons ":" hengband-pickpref:prefix-face)
+   (cons "\\^" hengband-pickpref:prefix-face)
 
    ;; Inscriptions
    (cons "#" hengband-pickpref:prefix-face)
